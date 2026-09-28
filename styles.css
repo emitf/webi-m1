@@ -101,9 +101,16 @@ h2 { margin-bottom: 0; font: 500 23px/1.2 var(--serif); letter-spacing: -.025em;
 .brew-button:not(:disabled):hover { background: var(--green-dark); transform: translateY(-1px); }
 .brew-button:focus-visible { outline: 3px solid #b8a6c5; outline-offset: 3px; }
 .brew-button span { color: #e4d49e; }
-.result-card { display: flex; align-items: center; gap: 8px; min-height: 25px; margin-top: 11px; color: #8c8591; font: 10px var(--mono); }
+.result-card { display: flex; align-items: center; justify-content: center; gap: 9px; width: 100%; min-height: 40px; margin-top: 11px; color: #8c8591; font: 10px var(--mono); }
 .result-card p { margin: 0; }
-.result-icon { color: #a996b3; font-size: 15px; }
+.result-icon { color: #a996b3; font-size: 20px; }
+.result-copy { display: grid; gap: 3px; text-align: left; }
+.result-card .result-title { color: #56515c; font: 500 11px var(--sans); }
+.result-card .result-description { color: #8c8591; font: 9px/1.5 var(--mono); }
+.result-card--success .result-icon { color: #788766; }
+.result-card--success .result-title { color: var(--green-dark); }
+.result-card--unknown .result-icon { color: #a18bad; }
+.result-card--unknown .result-title { color: #776584; }
 
 .discoveries-panel { grid-column: 1 / -1; padding-bottom: 20px; }
 .discovery-count { padding: 6px 9px; border: 1px solid #e1dacb; border-radius: 20px; color: #868273; font: 10px var(--mono); }
