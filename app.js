@@ -71,6 +71,7 @@ const selectionStatus = document.querySelector("#selection-status");
 const brewHint = document.querySelector("#brew-hint");
 const brewButton = document.querySelector("#brew-button");
 const brewResult = document.querySelector("#brew-result");
+const brewPanel = document.querySelector(".brew-panel");
 const discoveryCount = document.querySelector("#discovery-count");
 const discoveryList = document.querySelector("#discovery-list");
 
@@ -157,6 +158,7 @@ function findRecipe(selectedIds) {
 function showBrewResult(recipe) {
   brewResult.replaceChildren();
   brewResult.classList.remove("result-card--success", "result-card--unknown");
+  brewPanel.classList.remove("brew-panel--success", "brew-panel--unknown");
 
   const symbol = document.createElement("span");
   symbol.className = "result-icon";
@@ -173,11 +175,13 @@ function showBrewResult(recipe) {
 
   if (recipe) {
     brewResult.classList.add("result-card--success");
+    brewPanel.classList.add("brew-panel--success");
     symbol.textContent = recipe.symbol;
     title.textContent = recipe.name;
     description.textContent = recipe.description;
   } else {
     brewResult.classList.add("result-card--unknown");
+    brewPanel.classList.add("brew-panel--unknown");
     symbol.textContent = "☁";
     title.textContent = "An unfamiliar mixture";
     description.textContent = "No recipe yet, but something curious is stirring.";
@@ -236,6 +240,7 @@ function recordDiscovery(recipe) {
 
 function resetBrewResult() {
   brewResult.classList.remove("result-card--success", "result-card--unknown");
+  brewPanel.classList.remove("brew-panel--success", "brew-panel--unknown");
 
   const symbol = document.createElement("span");
   symbol.className = "result-icon";
@@ -280,6 +285,18 @@ ingredientList.addEventListener("click", (event) => {
   }
 
   renderSelection();
+});
+
+document.addEventListener("keydown", (event) => {
+  const targetIsEditable = event.target.closest("input, textarea, select, [contenteditable='true']");
+
+  if (targetIsEditable) {
+    return;
+  }
+
+  if (event.key.toLowerCase() === "n" && !event.repeat) {
+    document.body.classList.toggle("night-mode");
+  }
 });
 
 renderIngredients();

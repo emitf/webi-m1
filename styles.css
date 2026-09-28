@@ -9,6 +9,15 @@
   --green-dark: #43563a;
   --lavender: #e9e4ef;
   --yellow: #efd88a;
+  --night-paper: #232b2b;
+  --night-paper-deep: #2e3836;
+  --night-ink: #ece9de;
+  --night-muted: #a9ad9d;
+  --night-line: #48524b;
+  --night-green: #b1c29a;
+  --night-green-dark: #d0ddb9;
+  --night-lavender: #393341;
+  --night-yellow: #dfc779;
   --serif: "Fraunces", Georgia, serif;
   --sans: "DM Sans", sans-serif;
   --mono: "DM Mono", monospace;
@@ -111,6 +120,12 @@ h2 { margin-bottom: 0; font: 500 23px/1.2 var(--serif); letter-spacing: -.025em;
 .result-card--success .result-title { color: var(--green-dark); }
 .result-card--unknown .result-icon { color: #a18bad; }
 .result-card--unknown .result-title { color: #776584; }
+.brew-panel--success .cauldron-glow { background: #c7d68e; opacity: .95; }
+.brew-panel--success .cauldron-bubble { background: #dce7ae; }
+.brew-panel--unknown .cauldron-glow { background: #c3a9d2; opacity: .9; }
+.brew-panel--unknown .cauldron-bubble { background: #dac6e4; }
+.brew-panel--success .cauldron, .brew-panel--unknown .cauldron { animation: brew-wiggle .42s ease-in-out 2; }
+@keyframes brew-wiggle { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-4deg); } 75% { transform: rotate(4deg); } }
 
 .discoveries-panel { grid-column: 1 / -1; padding-bottom: 20px; }
 .discovery-count { padding: 6px 9px; border: 1px solid #e1dacb; border-radius: 20px; color: #868273; font: 10px var(--mono); }
@@ -123,6 +138,46 @@ h2 { margin-bottom: 0; font: 500 23px/1.2 var(--serif); letter-spacing: -.025em;
 .book-footer span { margin-right: 5px; color: #b49a61; }
 .page-footer { display: flex; justify-content: space-between; gap: 16px; padding: 25px 0 30px; color: #a09b8d; font-size: 8px; }
 .page-footer span span { padding-left: 4px; color: #7e896b; }
+
+body, .panel, .discovery-card, .brew-panel, .wordmark, .ingredient-name, .discovery-name, .book-footer, .page-footer, .intro-copy, .panel-description, .selection-count, .brew-hint, .result-card, .discovery-count { transition: background-color .25s ease, color .25s ease, border-color .25s ease; }
+
+body.night-mode {
+  color-scheme: dark;
+  --paper: var(--night-paper);
+  --paper-deep: var(--night-paper-deep);
+  --ink: var(--night-ink);
+  --muted: var(--night-muted);
+  --line: var(--night-line);
+  --green: var(--night-green);
+  --green-dark: var(--night-green-dark);
+  --lavender: var(--night-lavender);
+  --yellow: var(--night-yellow);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+body.night-mode .panel { background: rgba(46, 56, 54, .58); border-color: var(--line); }
+body.night-mode .brew-panel { background: #37333e; border-color: #514957; }
+body.night-mode .wordmark, body.night-mode .ingredient-name, body.night-mode .discovery-name { color: var(--ink); }
+body.night-mode .issue-label, body.night-mode .intro-copy, body.night-mode .panel-description, body.night-mode .selection-count, body.night-mode .brew-hint, body.night-mode .book-footer, body.night-mode .page-footer { color: var(--night-muted); }
+body.night-mode .empty-note { border-color: #58625b; color: #b4b6a8; }
+body.night-mode .ingredient-card, body.night-mode .discovery-card { background: #303937; border-color: #4b554d; }
+body.night-mode .ingredient-card.is-selected { background: #3a493c; border-color: #9eaf8c; }
+body.night-mode .ingredient-note, body.night-mode .discovery-description { color: #b2b3a6; }
+body.night-mode .ingredient-symbol { filter: saturate(.82) brightness(.85); }
+body.night-mode .selection-count, body.night-mode .book-footer { border-color: #46504a; }
+body.night-mode .discovery-count { border-color: #596354; color: #d0d1bd; }
+body.night-mode .result-card .result-title { color: #e1dfd4; }
+body.night-mode .result-card .result-description { color: #b9b5c0; }
+body.night-mode .brew-button:disabled { background: #5f6260; color: #d0d0c8; }
+body.night-mode .cauldron { border-color: #211e28; background: #38323f; }
+body.night-mode .cauldron::before { border-color: #211e28; background: #504756; }
+body.night-mode .cauldron-glow { background: #9781a9; }
+body.night-mode .cauldron-bubble { background: #c5accf; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
 
 @media (max-width: 700px) {
   .lab-shell { width: min(100% - 36px, 520px); }
