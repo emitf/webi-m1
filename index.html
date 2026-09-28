@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4efe6">
+    <meta name="description" content="A tiny alchemist's workshop for discovering curious potions.">
+    <title>The Little Potion Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <main class="lab-shell">
+      <header class="topbar">
+        <a class="wordmark" href="#top" aria-label="The Little Potion Lab home">
+          <span class="wordmark-mark" aria-hidden="true">✳</span>
+          <span>FIELD NOTES <span class="wordmark-divider">/</span> ALCHEMY CLUB</span>
+        </a>
+        <p class="issue-label">VOL. 01 <span>·</span> THE BEGINNER'S LAB</p>
+      </header>
+
+      <section class="intro" id="top" aria-labelledby="page-title">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> WORKSHOP OPEN <span class="eyebrow-divider">—</span> TAKE YOUR TIME</p>
+        <h1 id="page-title">A little bit of<br><span>everyday magic.</span></h1>
+        <p class="intro-copy">Gather a couple of curious things, drop them in the cauldron, and see what the day has in store.</p>
+      </section>
+
+      <div class="lab-grid">
+        <section class="panel ingredients-panel" aria-labelledby="ingredients-title">
+          <div class="panel-heading">
+            <div>
+              <p class="section-index">01 <span>/</span> YOUR MATERIALS</p>
+              <h2 id="ingredients-title">The ingredient shelf</h2>
+            </div>
+            <span class="panel-note">A few good things</span>
+          </div>
+          <p class="panel-description">Pick two ingredients that feel right together.</p>
+          <div class="ingredient-list" id="ingredient-list" aria-label="Available ingredients">
+            <p class="empty-note">Your ingredients will appear here.</p>
+          </div>
+          <div class="selection-count" aria-live="polite">
+            <span class="count-mark" aria-hidden="true">✳</span>
+            <span id="selection-status">Nothing in your basket yet</span>
+          </div>
+        </section>
+
+        <section class="panel brew-panel" aria-labelledby="brew-title">
+          <div class="panel-heading">
+            <div>
+              <p class="section-index">02 <span>/</span> THE GOOD PART</p>
+              <h2 id="brew-title">Make a little magic</h2>
+            </div>
+            <span class="moon-mark" aria-hidden="true">☾</span>
+          </div>
+          <div class="cauldron-stage" aria-hidden="true">
+            <span class="orbit orbit-one"></span>
+            <span class="orbit orbit-two"></span>
+            <span class="spark spark-one">✦</span>
+            <span class="spark spark-two">·</span>
+            <span class="spark spark-three">✳</span>
+            <div class="cauldron"><span class="cauldron-glow"></span><span class="cauldron-bubble bubble-one"></span><span class="cauldron-bubble bubble-two"></span></div>
+            <span class="cauldron-shadow"></span>
+          </div>
+          <p class="brew-hint" id="brew-hint">Choose two ingredients to get started.</p>
+          <button class="brew-button" id="brew-button" type="button" disabled>
+            <span aria-hidden="true">✳</span> Brew something
+          </button>
+          <div class="result-card" id="brew-result" aria-live="polite" aria-atomic="true">
+            <span class="result-icon" aria-hidden="true">✧</span>
+            <p>Your first discovery is waiting.</p>
+          </div>
+        </section>
+
+        <section class="panel discoveries-panel" aria-labelledby="discoveries-title">
+          <div class="panel-heading">
+            <div>
+              <p class="section-index">03 <span>/</span> THINGS YOU'VE FOUND</p>
+              <h2 id="discoveries-title">The little black book</h2>
+            </div>
+            <span class="discovery-count" id="discovery-count">0 / 8</span>
+          </div>
+          <div class="discovery-list" id="discovery-list" aria-live="polite">
+            <p class="empty-note">Your discoveries will find a home here.</p>
+          </div>
+          <p class="book-footer"><span aria-hidden="true">✦</span> Good things take a little experimenting.</p>
+        </section>
+      </div>
+
+      <footer class="page-footer">
+        <span>MADE SLOWLY, WITH CURIOSITY</span>
+        <span>AN ALCHEMY CLUB EXPERIMENT <span aria-hidden="true">✳</span></span>
+      </footer>
+    </main>
+  </body>
+</html>
