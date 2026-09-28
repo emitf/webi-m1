@@ -115,6 +115,10 @@ h2 { margin-bottom: 0; font: 500 23px/1.2 var(--serif); letter-spacing: -.025em;
 .discoveries-panel { grid-column: 1 / -1; padding-bottom: 20px; }
 .discovery-count { padding: 6px 9px; border: 1px solid #e1dacb; border-radius: 20px; color: #868273; font: 10px var(--mono); }
 .discovery-list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 9px; margin-top: 20px; min-height: 53px; }
+.discovery-card { min-width: 0; padding: 13px; border: 1px solid #e3ddcf; border-radius: 4px; background: rgba(255, 254, 250, .65); }
+.discovery-symbol { display: block; margin-bottom: 8px; font-size: 19px; }
+.discovery-name { margin: 0 0 5px; color: #4d4e43; font: 500 13px/1.25 var(--serif); }
+.discovery-description { margin: 0; color: #908c80; font: 9px/1.55 var(--mono); }
 .book-footer { margin: 16px 0 0; padding-top: 13px; border-top: 1px solid #e5dfd4; color: #999586; font: 10px var(--mono); }
 .book-footer span { margin-right: 5px; color: #b49a61; }
 .page-footer { display: flex; justify-content: space-between; gap: 16px; padding: 25px 0 30px; color: #a09b8d; font-size: 8px; }

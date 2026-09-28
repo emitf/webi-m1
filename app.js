@@ -9,48 +9,56 @@ const ingredients = [
 
 const recipes = [
   {
+    id: "moonbeam-marmalade",
     ingredients: ["moonberry", "honey"],
     name: "Moonbeam Marmalade",
     symbol: "🍯",
     description: "A warm little glow for long evenings.",
   },
   {
+    id: "pocket-meadow",
     ingredients: ["sunflower", "moss"],
     name: "Pocket-Sized Meadow",
     symbol: "🌼",
     description: "Smells like a sunny walk through the woods.",
   },
   {
+    id: "tidepool-galaxy",
     ingredients: ["stardust", "seashell"],
     name: "Tidepool Galaxy",
     symbol: "🌌",
     description: "A tiny night sky, still rippling from the sea.",
   },
   {
+    id: "fernlight-fizz",
     ingredients: ["moonberry", "moss"],
     name: "Fernlight Fizz",
     symbol: "🫧",
     description: "Cool, bright bubbles from a moonlit clearing.",
   },
   {
+    id: "golden-hour-syrup",
     ingredients: ["sunflower", "honey"],
     name: "Golden Hour Syrup",
     symbol: "☀️",
     description: "Sweet sunshine you can almost spread on toast.",
   },
   {
+    id: "wishkeepers-tea",
     ingredients: ["stardust", "moonberry"],
     name: "Wishkeeper's Tea",
     symbol: "🫖",
     description: "Best enjoyed while making a very small wish.",
   },
   {
+    id: "seaglass-garden",
     ingredients: ["seashell", "moss"],
     name: "Seaglass Garden",
     symbol: "🪴",
     description: "A quiet green place with the sound of distant waves.",
   },
   {
+    id: "daydream-conch",
     ingredients: ["sunflower", "seashell"],
     name: "Daydream Conch",
     symbol: "🐚",
@@ -63,8 +71,11 @@ const selectionStatus = document.querySelector("#selection-status");
 const brewHint = document.querySelector("#brew-hint");
 const brewButton = document.querySelector("#brew-button");
 const brewResult = document.querySelector("#brew-result");
+const discoveryCount = document.querySelector("#discovery-count");
+const discoveryList = document.querySelector("#discovery-list");
 
 const selectedIngredients = [];
+const discoveredRecipes = [];
 let selectionNotice = "";
 
 function createIngredientButton(ingredient) {
@@ -176,6 +187,53 @@ function showBrewResult(recipe) {
   brewResult.append(symbol, message);
 }
 
+function createDiscoveryCard(recipe) {
+  const card = document.createElement("article");
+  card.className = "discovery-card";
+
+  const symbol = document.createElement("span");
+  symbol.className = "discovery-symbol";
+  symbol.setAttribute("aria-hidden", "true");
+  symbol.textContent = recipe.symbol;
+
+  const title = document.createElement("h3");
+  title.className = "discovery-name";
+  title.textContent = recipe.name;
+
+  const description = document.createElement("p");
+  description.className = "discovery-description";
+  description.textContent = recipe.description;
+
+  card.append(symbol, title, description);
+  return card;
+}
+
+function renderDiscoveries() {
+  discoveryCount.textContent = `${discoveredRecipes.length} / ${recipes.length}`;
+
+  if (discoveredRecipes.length === 0) {
+    const emptyMessage = document.createElement("p");
+    emptyMessage.className = "empty-note";
+    emptyMessage.textContent = "Your discoveries will find a home here.";
+    discoveryList.replaceChildren(emptyMessage);
+    return;
+  }
+
+  const cards = discoveredRecipes.map((recipeId) => {
+    return createDiscoveryCard(recipes.find((recipe) => recipe.id === recipeId));
+  });
+  discoveryList.replaceChildren(...cards);
+}
+
+function recordDiscovery(recipe) {
+  if (!recipe || discoveredRecipes.includes(recipe.id)) {
+    return;
+  }
+
+  discoveredRecipes.push(recipe.id);
+  renderDiscoveries();
+}
+
 function resetBrewResult() {
   brewResult.classList.remove("result-card--success", "result-card--unknown");
 
@@ -195,7 +253,9 @@ brewButton.addEventListener("click", () => {
     return;
   }
 
-  showBrewResult(findRecipe(selectedIngredients));
+  const recipe = findRecipe(selectedIngredients);
+  showBrewResult(recipe);
+  recordDiscovery(recipe);
 });
 
 ingredientList.addEventListener("click", (event) => {
@@ -224,3 +284,4 @@ ingredientList.addEventListener("click", (event) => {
 
 renderIngredients();
 renderSelection();
+renderDiscoveries();
