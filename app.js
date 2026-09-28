@@ -74,6 +74,7 @@ const brewResult = document.querySelector("#brew-result");
 const brewPanel = document.querySelector(".brew-panel");
 const discoveryCount = document.querySelector("#discovery-count");
 const discoveryList = document.querySelector("#discovery-list");
+const customRecipeArea = document.querySelector("#custom-recipe-area");
 
 const selectedIngredients = [];
 const discoveredRecipes = [];
@@ -156,6 +157,7 @@ function findRecipe(selectedIds) {
 }
 
 function showBrewResult(recipe) {
+  customRecipeArea.replaceChildren();
   brewResult.replaceChildren();
   brewResult.classList.remove("result-card--success", "result-card--unknown");
   brewPanel.classList.remove("brew-panel--success", "brew-panel--unknown");
@@ -189,6 +191,10 @@ function showBrewResult(recipe) {
 
   message.append(title, description);
   brewResult.append(symbol, message);
+
+  if (!recipe) {
+    renderCustomRecipeForm([...selectedIngredients]);
+  }
 }
 
 function createDiscoveryCard(recipe) {
@@ -208,7 +214,16 @@ function createDiscoveryCard(recipe) {
   description.className = "discovery-description";
   description.textContent = recipe.description;
 
-  card.append(symbol, title, description);
+  card.append(symbol, title);
+
+  if (recipe.isCustom) {
+    const badge = document.createElement("span");
+    badge.className = "discovery-badge";
+    badge.textContent = "YOUR RECIPE";
+    card.append(badge);
+  }
+
+  card.append(description);
   return card;
 }
 
@@ -238,7 +253,78 @@ function recordDiscovery(recipe) {
   renderDiscoveries();
 }
 
+function renderCustomRecipeForm(ingredientIds) {
+  const form = document.createElement("form");
+  form.className = "custom-recipe-form";
+
+  const heading = document.createElement("p");
+  heading.className = "custom-recipe-heading";
+  heading.textContent = "Give this mixture a recipe of its own";
+
+  const nameLabel = document.createElement("label");
+  nameLabel.className = "custom-recipe-label";
+  nameLabel.htmlFor = "custom-recipe-name";
+  nameLabel.textContent = "Potion name";
+
+  const nameInput = document.createElement("input");
+  nameInput.className = "custom-recipe-input";
+  nameInput.id = "custom-recipe-name";
+  nameInput.name = "name";
+  nameInput.type = "text";
+  nameInput.maxLength = 35;
+  nameInput.required = true;
+  nameInput.placeholder = "e.g. Cloudberry cordial";
+
+  const descriptionLabel = document.createElement("label");
+  descriptionLabel.className = "custom-recipe-label";
+  descriptionLabel.htmlFor = "custom-recipe-description";
+  descriptionLabel.textContent = "What does it do?";
+
+  const descriptionInput = document.createElement("textarea");
+  descriptionInput.className = "custom-recipe-input custom-recipe-input--description";
+  descriptionInput.id = "custom-recipe-description";
+  descriptionInput.name = "description";
+  descriptionInput.maxLength = 110;
+  descriptionInput.required = true;
+  descriptionInput.rows = 2;
+  descriptionInput.placeholder = "A little note for your recipe book...";
+
+  const saveButton = document.createElement("button");
+  saveButton.className = "custom-recipe-save";
+  saveButton.type = "submit";
+  saveButton.textContent = "Add to my recipe book";
+
+  form.append(heading, nameLabel, nameInput, descriptionLabel, descriptionInput, saveButton);
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const name = nameInput.value.trim();
+    const description = descriptionInput.value.trim();
+    if (!name || !description) {
+      return;
+    }
+
+    const pair = [...ingredientIds].sort();
+    const customRecipe = {
+      id: `custom-${pair.join("-")}`,
+      ingredients: pair,
+      name,
+      symbol: "🧪",
+      description,
+      isCustom: true,
+    };
+
+    recipes.push(customRecipe);
+    showBrewResult(customRecipe);
+    recordDiscovery(customRecipe);
+  });
+
+  customRecipeArea.replaceChildren(form);
+  nameInput.focus();
+}
+
 function resetBrewResult() {
+  customRecipeArea.replaceChildren();
   brewResult.classList.remove("result-card--success", "result-card--unknown");
   brewPanel.classList.remove("brew-panel--success", "brew-panel--unknown");
 
