@@ -128,6 +128,12 @@ h2 { margin-bottom: 0; font: 500 23px/1.2 var(--serif); letter-spacing: -.025em;
 .custom-recipe-input::placeholder { color: #aaa4ae; }
 .custom-recipe-input:focus-visible { outline: 3px solid #b8a6c5; outline-offset: 2px; }
 .custom-recipe-input--description { resize: vertical; }
+.custom-recipe-emoji-label { margin: 2px 0 0; }
+.custom-recipe-emoji-picker { display: flex; flex-wrap: wrap; gap: 6px; }
+.custom-recipe-emoji { display: grid; place-items: center; width: 34px; height: 34px; padding: 0; border: 1px solid #d4ced8; border-radius: 3px; background: rgba(255, 255, 255, .55); font-size: 17px; cursor: pointer; }
+.custom-recipe-emoji:hover { border-color: #a99ab4; }
+.custom-recipe-emoji[aria-pressed="true"] { border-color: #82748c; background: #e7e0ea; box-shadow: inset 0 0 0 1px #82748c; }
+.custom-recipe-emoji:focus-visible { outline: 3px solid #b8a6c5; outline-offset: 2px; }
 .custom-recipe-save { justify-self: start; min-height: 34px; margin-top: 3px; padding: 0 12px; border: 1px solid #c9bdce; border-radius: 3px; background: #e7e0ea; color: #5e5367; font-size: 10px; font-weight: 600; cursor: pointer; }
 .custom-recipe-save:hover { background: #ddd3e2; }
 .custom-recipe-save:focus-visible { outline: 3px solid #b8a6c5; outline-offset: 2px; }
@@ -184,6 +190,8 @@ body.night-mode .result-card .result-description { color: #b9b5c0; }
 body.night-mode .custom-recipe-heading { color: #e1dce5; }
 body.night-mode .custom-recipe-label { color: #c4bfca; }
 body.night-mode .custom-recipe-input { border-color: #5d5663; background: #302d35; color: #f0edf3; }
+body.night-mode .custom-recipe-emoji { border-color: #5d5663; background: #302d35; }
+body.night-mode .custom-recipe-emoji[aria-pressed="true"] { border-color: #baabc4; background: #51465b; }
 body.night-mode .custom-recipe-save { border-color: #71647b; background: #51465b; color: #f0eaf4; }
 body.night-mode .custom-recipe-save:hover { background: #62546e; }
 body.night-mode .discovery-badge { color: #c2abd1; }

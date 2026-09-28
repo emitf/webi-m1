@@ -254,6 +254,9 @@ function recordDiscovery(recipe) {
 }
 
 function renderCustomRecipeForm(ingredientIds) {
+  const emojiChoices = ["🧪", "🔮", "🌙", "🌱", "🍄", "💫"];
+  let selectedSymbol = emojiChoices[0];
+
   const form = document.createElement("form");
   form.className = "custom-recipe-form";
 
@@ -289,12 +292,44 @@ function renderCustomRecipeForm(ingredientIds) {
   descriptionInput.rows = 2;
   descriptionInput.placeholder = "A little note for your recipe book...";
 
+  const emojiLabel = document.createElement("p");
+  emojiLabel.className = "custom-recipe-label custom-recipe-emoji-label";
+  emojiLabel.textContent = "Choose an emblem";
+
+  const emojiPicker = document.createElement("div");
+  emojiPicker.className = "custom-recipe-emoji-picker";
+  emojiPicker.setAttribute("role", "group");
+  emojiPicker.setAttribute("aria-label", "Choose an emoji for your potion");
+
+  emojiChoices.forEach((emoji) => {
+    const emojiButton = document.createElement("button");
+    emojiButton.className = "custom-recipe-emoji";
+    emojiButton.type = "button";
+    emojiButton.dataset.emoji = emoji;
+    emojiButton.setAttribute("aria-label", `Use ${emoji} as the potion emoji`);
+    emojiButton.setAttribute("aria-pressed", String(emoji === selectedSymbol));
+    emojiButton.textContent = emoji;
+    emojiPicker.append(emojiButton);
+  });
+
+  emojiPicker.addEventListener("click", (event) => {
+    const emojiButton = event.target.closest("[data-emoji]");
+    if (!emojiButton || !emojiPicker.contains(emojiButton)) {
+      return;
+    }
+
+    selectedSymbol = emojiButton.dataset.emoji;
+    emojiPicker.querySelectorAll("[data-emoji]").forEach((button) => {
+      button.setAttribute("aria-pressed", String(button === emojiButton));
+    });
+  });
+
   const saveButton = document.createElement("button");
   saveButton.className = "custom-recipe-save";
   saveButton.type = "submit";
   saveButton.textContent = "Add to my recipe book";
 
-  form.append(heading, nameLabel, nameInput, descriptionLabel, descriptionInput, saveButton);
+  form.append(heading, nameLabel, nameInput, descriptionLabel, descriptionInput, emojiLabel, emojiPicker, saveButton);
   form.addEventListener("submit", (event) => {
     event.preventDefault();
 
@@ -309,7 +344,7 @@ function renderCustomRecipeForm(ingredientIds) {
       id: `custom-${pair.join("-")}`,
       ingredients: pair,
       name,
-      symbol: "🧪",
+      symbol: selectedSymbol,
       description,
       isCustom: true,
     };
